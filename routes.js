@@ -164,12 +164,15 @@ router.post("/saveTask/:mainId", async (req, res) => {
 router.put("/updateTaskDetails/:taskId", async (req, res) => {
   const { taskId } = req.params;
   const { title, priority, status, checklist, duedate, assignee } = req.body;
+  console.log(assignee)
 
   try {
     const updateData = { title, priority, status, checklist, dueDate: duedate };
     
     if (assignee) {
       updateData.name = assignee.value;
+    }else{
+      updateData.name=null
     }
 
     const updatedTask = await Todo.findByIdAndUpdate(taskId, updateData, { new: true });
